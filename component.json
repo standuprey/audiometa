@@ -1,0 +1,21 @@
+{
+  "author": "Stanislas Duprey",
+  "name": "audioMeta",
+  "description": "Extract type and metadata of audio files",
+  "homepage": "http://github.com/standup75/audiometa",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/standup75/audiometa.git"
+  },
+  "main": "./build/audiometa.js",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.0.5",
+    "json3": "~3.2.4",
+    "es5-shim": "~2.0.8"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.0.5",
+    "angular-scenario": "~1.0.5"
+  }
+}

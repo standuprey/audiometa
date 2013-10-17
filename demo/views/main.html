@@ -1,0 +1,13 @@
+<h4>Pick one or more audio files and get their metadata</h4>
+<input type="file" multiple onchange="angular.element(this).scope().setFiles(this)"/>
+<ul>
+	<li ng-repeat="file in files">
+		<div ng-show="file.info.title">Title: {{file.info.title}}</div>
+		<div ng-show="file.info.album">Album: {{file.info.album}}</div>
+		<div ng-show="file.info.artist">Artist: {{file.info.artist}}</div>
+		<div ng-show="file.info.type">Type: {{file.info.type}}</div>
+		<div ng-show="file.info.size">Size: {{file.info.size}}</div>
+		<div ng-show="file.info.bitrate">Bitrate: {{file.info.bitrate}}</div>
+		<div ng-show="file.info.samplerate">Samplerate: {{file.info.samplerate}}</div>
+	</li>
+</ul>
