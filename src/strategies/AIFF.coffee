@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "AIFF", ["HexReader", "$q", "ID3", (HexReader, $q, ID3) ->
+angular.module("audiometa").factory "AIFF", ["HexReader", "$q", "ID3", (HexReader, $q, ID3) ->
 	findTag = (hexString, tag, offset) ->
 		offset = offset || 0
 		length = HexReader.getBits hexString, 32, 32

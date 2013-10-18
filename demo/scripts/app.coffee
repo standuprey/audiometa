@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMetaDemo", ["audioMeta"]).config ($routeProvider) ->
+angular.module("audiometaDemo", ["audiometa"]).config ($routeProvider) ->
   $routeProvider.when("/",
     templateUrl: "views/main.html"
     controller: "MainCtrl"

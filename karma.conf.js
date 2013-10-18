@@ -10,7 +10,7 @@ files = [
   'demo/components/angular/angular.js',
   'demo/components/angular-route/angular-route.js',
   'demo/components/angular-mocks/angular-mocks.js',
-  'dist/audioMeta.js',
+  'dist/audiometa.js',
   'test/mock/**/*.coffee',
   'test/spec/**/*.coffee'
 ];

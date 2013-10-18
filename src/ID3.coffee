@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "ID3", ["HexReader", (HexReader) ->
+angular.module("audiometa").factory "ID3", ["HexReader", (HexReader) ->
 	trimSubStr = (string, offset, length) -> string.substr(offset, length).replace(/\x00/g, '')
 	getSize = (hexString, byteOffset, length = 4) -> HexReader.getBits hexString, byteOffset * 8, length * 8, 7
 

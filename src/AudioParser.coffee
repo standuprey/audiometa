@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "AudioParser", ["$window", "$q", "HexReader", "Strategies", "$injector"
+angular.module("audiometa").factory "AudioParser", ["$window", "$q", "HexReader", "Strategies", "$injector"
 ($window, $q, HexReader, Strategies, $injector) ->
 
 	getInfo: (file) ->

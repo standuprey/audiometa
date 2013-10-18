@@ -2,7 +2,7 @@
 describe "Factory: HexReader", ->
 	
 	# load the controller's module
-	beforeEach module "audioMeta"
+	beforeEach module "audiometa"
 
 	# globals
 	toHex = (hexArray) -> hexArray.map((hex)-> String.fromCharCode(parseInt(hex, 16))).join ""

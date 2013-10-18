@@ -12,7 +12,7 @@ module.exports = function (grunt) {
   var yeomanConfig = {
     app: 'src',
     demo: 'demo',
-    name: 'audioMeta',
+    name: 'audiometa',
     dist: 'dist'
   };
 

@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "WAV", ["HexReader", "$q", (HexReader, $q) ->
+angular.module("audiometa").factory "WAV", ["HexReader", "$q", (HexReader, $q) ->
 	parse: (file, firstBytes) ->
 		deferred = $q.defer()
 		fileInfo = { type: "WAV" }

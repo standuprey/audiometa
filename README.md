@@ -1,4 +1,4 @@
-audioMeta Angular Module
+audiometa Angular Module
 ========================
 
 Get metadata information of the MP3, WAV, AIFF files being uploaded.
@@ -9,9 +9,9 @@ The demo is necessary to fully test the features, since there is no way to write
 Install
 -------
 
-Copy the audioMeta.js file into your project and add the following line with the correct path:
+Copy the audiometa.js file into your project and add the following line with the correct path:
 
-		<script src="/path/to/scripts/audioMeta.js"></script>
+		<script src="/path/to/scripts/audiometa.js"></script>
 
 Alternatively, if you're using bower, you can add this to your component.json (or bower.json):
 

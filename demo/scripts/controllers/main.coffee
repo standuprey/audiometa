@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMetaDemo").controller "MainCtrl", ["AudioParser", "$scope", (AudioParser, $scope) ->
+angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "$scope", (AudioParser, $scope) ->
 
 	$scope.setFiles = (element) ->
 		files = element.files

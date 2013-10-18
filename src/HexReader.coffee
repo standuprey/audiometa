@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "HexReader", ["$q", "$window", "$rootScope", ($q, $window, $rootScope) ->
+angular.module("audiometa").factory "HexReader", ["$q", "$window", "$rootScope", ($q, $window, $rootScope) ->
 
 	getBitsRec = (hexString, offset, length) ->
 		endOffset = offset + length

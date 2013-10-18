@@ -1,6 +1,6 @@
 {
   "author": "Stanislas Duprey",
-  "name": "audioMeta",
+  "name": "audiometa",
   "description": "Extract type and metadata of audio files",
   "homepage": "http://github.com/standup75/audiometa",
   "repository": {

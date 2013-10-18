@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "MP3", ["$window", "$q", "HexReader", "ID3",
+angular.module("audiometa").factory "MP3", ["$window", "$q", "HexReader", "ID3",
 ($window, $q, HexReader, ID3) ->
 
 	# according to the table here: http://www.mp3-tech.org/programmer/frame_header.html
