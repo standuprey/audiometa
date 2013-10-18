@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audioMeta").factory "HexReader", ["$q", "$window", ($q, $window) ->
+angular.module("audioMeta").factory "HexReader", ["$q", "$window", "$rootScope", ($q, $window, $rootScope) ->
 
 	getBitsRec = (hexString, offset, length) ->
 		endOffset = offset + length
@@ -15,6 +15,8 @@ angular.module("audioMeta").factory "HexReader", ["$q", "$window", ($q, $window)
 		res
 
 	getBits: (hexString, offset, length, significantBits = 8) ->
+		offset = offset || 0
+		length = length || (hexString.length - offset) * 8
 		rad = Math.pow 2, significantBits
 		ba = getBitsRec hexString, offset, length
 		res = 0
@@ -38,14 +40,21 @@ angular.module("audioMeta").factory "HexReader", ["$q", "$window", ($q, $window)
 			return false unless parseInt(hexSequence[i * 2], 16) * 16 + parseInt(hexSequence[(i * 2) + 1], 16) is hexStringCopy.charCodeAt(i)
 		true
 
+	toLittleEndian: (hexString, offset = 0, length) ->
+		length = length || hexString.length - offset
+		res = ""
+		hexString.substr(offset, length).split("").forEach (char) -> res = char + res
+		res
+
 	getFileBytes: (file, offset, size) ->
 		deferred = $q.defer()
 		reader = new $window.FileReader
 		reader.onloadend = (evt) ->
-			if evt.target.readyState is FileReader.DONE
-				deferred.resolve evt.target.result
-			else
-				deferred.reject()
+			$rootScope.$apply ->
+				if evt.target.readyState is FileReader.DONE
+					deferred.resolve evt.target.result
+				else
+					deferred.reject()
 		blob = file.slice(offset, size)
 		reader.readAsBinaryString blob
 		deferred.promise

@@ -17,8 +17,8 @@ Alternatively, if you're using bower, you can add this to your component.json (o
 
 		"audiometa": "git://github.com/standup75/audiometa.git"
 
- Usage
- -----
+Usage
+-----
 
 Register for the change event on the input tag in your html:
 

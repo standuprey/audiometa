@@ -7,11 +7,12 @@ describe "Factory: HexReader", ->
 	# globals
 	toHex = (hexArray) -> hexArray.map((hex)-> String.fromCharCode(parseInt(hex, 16))).join ""
 
-	hexString = toHex ["01", "FF", "00", "F1"]
 
 	# Initialize the factory
 	hexReaderFactory = undefined
+	hexString = undefined
 	beforeEach inject ($injector) ->
+		hexString = toHex ["01", "FF", "00", "F1"]
 		hexReaderFactory = $injector.get "HexReader"
 
 	it "calls getBits and returns the right bits", ->
@@ -53,6 +54,10 @@ describe "Factory: HexReader", ->
 		expect(checksequenceAsHexString(hexString, 1, "FF00")).toBe true
 		expect(checksequenceAsHexString(hexString, 2, "00F1")).toBe true
 		expect(checksequenceAsHexString(hexString, 3, "FF", 4)).toBe true
+
+	it "calls toLittleEndian and return a little endien version of the hex string", ->
+		_hexString = hexReaderFactory.toLittleEndian hexString
+		expect(hexReaderFactory.checksequenceAsHexString(_hexString, 0, "F100FF01")).toBe true
 
 	it "retrieves bytes from a file with getFileBytes", inject ($rootScope) ->
 		spyOn(FileReader.prototype, "readAsBinaryString").andCallFake (file) ->

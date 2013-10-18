@@ -13,6 +13,6 @@ angular.module("audioMetaDemo").controller "MainCtrl", ["AudioParser", "$scope",
 			do (fileObj) ->
 				AudioParser.getInfo(files[i]).then (fileInfo) ->
 					fileObj.info = fileInfo
-					console.log(fileObj)
+					console.log "Metadata Found: ", fileObj
 			i++
 ]

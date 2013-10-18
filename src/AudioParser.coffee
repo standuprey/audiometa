@@ -14,11 +14,13 @@ angular.module("audioMeta").factory "AudioParser", ["$window", "$q", "HexReader"
 			# it is easy to defer the response.
 			promises = []
 			for strategy in Strategies
+				console.log($injector.get(strategy), strategy)
 				res = $injector.get(strategy).parse file, hexString
 				promises.push res
 				res.then (strategyFileInfo) ->
 					if strategyFileInfo and typeof strategyFileInfo is "object"
 						fileInfo[key] = strategyFileInfo[key] for key of strategyFileInfo
+					null
 			$q.all(promises).then ->
 				deferred.resolve fileInfo
 
