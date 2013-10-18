@@ -23,7 +23,6 @@
             promises = [];
             for (_i = 0, _len = Strategies.length; _i < _len; _i++) {
               strategy = Strategies[_i];
-              console.log($injector.get(strategy), strategy);
               res = $injector.get(strategy).parse(file, hexString);
               promises.push(res);
               res.then(function(strategyFileInfo) {
@@ -98,8 +97,8 @@
           if (bitIgnore) {
             cache = 0;
             while (bitIgnore) {
-              cache += Math.pow(2, bitIgnore);
               bitIgnore--;
+              cache += Math.pow(2, bitIgnore);
             }
             ffPaddedChar = String.fromCharCode(hexStringCopy.charCodeAt(len - 1) | cache);
             hexStringCopy = hexStringCopy.substr(0, len - 1) + ffPaddedChar;
@@ -183,12 +182,15 @@
         var id3minorVersion;
         id3minorVersion = hexString.charCodeAt(3);
         if (id3minorVersion === 2) {
-          return addID3v2_2(hexString, fileInfo, id3v2Size, decodeMP3Header);
+          addID3v2_2(hexString, fileInfo, id3v2Size, decodeMP3Header);
         } else if (id3minorVersion === 3) {
-          return addID3v2_3(hexString, fileInfo, id3v2Size, decodeMP3Header);
+          addID3v2_3(hexString, fileInfo, id3v2Size, decodeMP3Header);
+        }
+        if (decodeMP3Header) {
+          return decodeMP3Header(hexString.substr(id3v2Size), fileInfo);
         }
       };
-      addID3v2_2 = function(hexString, fileInfo, id3v2Size, decodeMP3Header) {
+      addID3v2_2 = function(hexString, fileInfo, id3v2Size) {
         var album, artist, firstFrameOffset, id3v2Frames, title;
         firstFrameOffset = 10;
         id3v2Frames = getId3v2Frames(hexString, firstFrameOffset, id3v2Size, 3, 6);
@@ -204,12 +206,9 @@
         if (album) {
           fileInfo.album = album;
         }
-        if (decodeMP3Header) {
-          addMP3Header(hexString.substr(id3v2Size), fileInfo);
-        }
         return null;
       };
-      addID3v2_3 = function(hexString, fileInfo, id3v2Size, decodeMP3Header) {
+      addID3v2_3 = function(hexString, fileInfo, id3v2Size) {
         var album, artist, extHeaderPresent, extHeaderSize, firstFrameOffset, id3v2Frames, title;
         extHeaderPresent = (HexReader.getBits(hexString, 41, 1)) === 1;
         firstFrameOffset = 10;
@@ -230,9 +229,6 @@
         if (album) {
           fileInfo.album = album;
         }
-        if (decodeMP3Header) {
-          addMP3Header(hexString.substr(id3v2Size), fileInfo);
-        }
         return null;
       };
       getAndAddID3v2 = function(hexString, fileInfo, file, deferred, decodeMP3Header) {
@@ -247,7 +243,7 @@
         footerPresent = (HexReader.getBits(hexString, 43, 1)) === 1;
         totalSize = (getSize(hexString, 6)) + (footerPresent ? 20 : 10);
         if (hexString.length < totalSize + mp3HeaderLength) {
-          HexReader.getFileBytes(file, 0, totalSize).then(function(_hexString) {
+          HexReader.getFileBytes(file, 0, totalSize + mp3HeaderLength).then(function(_hexString) {
             hexString = _hexString;
             return getInfoAndResolve();
           });
@@ -343,11 +339,10 @@
                     if (hexString.length === length + 4) {
                       hexString = hexString.substr(4);
                       ID3.getAndAddID3v2(hexString, fileInfo);
-                      deferred.resolve(fileInfo);
                       break;
                     }
                   }
-                  return null;
+                  return deferred.resolve(fileInfo);
                 });
               } else {
                 deferred.resolve(fileInfo);
@@ -511,7 +506,7 @@
             return deferred.resolve(fileInfo);
           };
           if (ID3.isID3v2(firstBytes)) {
-            ID3.getAndAddID3v2(firstBytes, fileInfo, file, deferred, true);
+            ID3.getAndAddID3v2(firstBytes, fileInfo, file, deferred, addMP3Header);
           } else if (ID3.isID3v1(firstBytes)) {
             ID3.addID3v1(firstBytes, fileInfo);
             addMP3Header(firstBytes.substr(128), fileInfo);
