@@ -136,6 +136,18 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    copy: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          dest: '',
+          src: [
+            '<%= yeoman.name %>.js'
+          ]
+        }]
+      }
     }
   });
 
@@ -154,6 +166,7 @@ module.exports = function (grunt) {
     'clean:server',
     'coffee:dist',
     'concat',
+    'copy',
     'connect:test',
     'karma'
   ]);
@@ -162,6 +175,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'coffee:dist',
     'concat',
+    'copy',
     'test'
   ]);
 
