@@ -31,8 +31,8 @@ angular.module("audiometa").factory "HexReader", ["$q", "$window", "$rootScope",
 		if bitIgnore
 			cache = 0
 			while bitIgnore
-				cache += Math.pow 2, bitIgnore
 				bitIgnore--
+				cache += Math.pow 2, bitIgnore
 			ffPaddedChar = String.fromCharCode(hexStringCopy.charCodeAt(len - 1) | cache)
 			hexStringCopy = hexStringCopy.substr(0, len - 1) + ffPaddedChar
 		i = len

@@ -132,7 +132,7 @@ angular.module("audiometa").factory "MP3", ["$window", "$q", "HexReader", "ID3",
 			deferred.resolve fileInfo
 
 		if ID3.isID3v2 firstBytes
-			ID3.getAndAddID3v2 firstBytes, fileInfo, file, deferred, true
+			ID3.getAndAddID3v2 firstBytes, fileInfo, file, deferred, addMP3Header
 		else if ID3.isID3v1 firstBytes
 			ID3.addID3v1 firstBytes, fileInfo
 			addMP3Header firstBytes.substr(128), fileInfo

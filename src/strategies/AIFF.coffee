@@ -37,9 +37,8 @@ angular.module("audiometa").factory "AIFF", ["HexReader", "$q", "ID3", (HexReade
 							if hexString.length is length + 4
 								hexString = hexString.substr 4 # skip length of the AIFF ID3 Header
 								ID3.getAndAddID3v2 hexString, fileInfo
-								deferred.resolve fileInfo
 								break
-						null
+						deferred.resolve fileInfo
 				else
 					deferred.resolve fileInfo
 		else deferred.resolve()

@@ -22,9 +22,10 @@ angular.module("audiometa").factory "ID3", ["HexReader", (HexReader) ->
 			addID3v2_2 hexString, fileInfo, id3v2Size, decodeMP3Header
 		else if id3minorVersion is 3
 			addID3v2_3 hexString, fileInfo, id3v2Size, decodeMP3Header
+		decodeMP3Header(hexString.substr(id3v2Size), fileInfo) if decodeMP3Header
 
 	# http://id3lib.sourceforge.net/id3/id3v2-00.txt
-	addID3v2_2 = (hexString, fileInfo, id3v2Size, decodeMP3Header) ->
+	addID3v2_2 = (hexString, fileInfo, id3v2Size) ->
 		firstFrameOffset = 10
 		id3v2Frames = getId3v2Frames hexString, firstFrameOffset, id3v2Size, 3, 6
 		artist = id3v2Frames.TP1 || id3v2Frames.TP2  || id3v2Frames.TCM || id3v2Frames.TP3 || id3v2Frames.TP4
@@ -33,11 +34,10 @@ angular.module("audiometa").factory "ID3", ["HexReader", (HexReader) ->
 		fileInfo.title = title if title
 		album = id3v2Frames.TAL
 		fileInfo.album = album if album
-		addMP3Header(hexString.substr(id3v2Size), fileInfo) if decodeMP3Header
 		null
 
 	# http://id3lib.sourceforge.net/id3/id3v2.3.0.html#sec3.2
-	addID3v2_3 = (hexString, fileInfo, id3v2Size, decodeMP3Header) ->
+	addID3v2_3 = (hexString, fileInfo, id3v2Size) ->
 		extHeaderPresent = (HexReader.getBits hexString, 41, 1) is 1
 		firstFrameOffset = 10
 		if extHeaderPresent
@@ -50,7 +50,6 @@ angular.module("audiometa").factory "ID3", ["HexReader", (HexReader) ->
 		fileInfo.title = title if title
 		album = id3v2Frames.TALB
 		fileInfo.album = album if album
-		addMP3Header(hexString.substr(id3v2Size), fileInfo) if decodeMP3Header
 		null
 
 	getAndAddID3v2 = (hexString, fileInfo, file, deferred, decodeMP3Header) ->
@@ -61,7 +60,7 @@ angular.module("audiometa").factory "ID3", ["HexReader", (HexReader) ->
 		footerPresent = (HexReader.getBits hexString, 43, 1) is 1
 		totalSize = (getSize hexString, 6)  + (if footerPresent then 20 else 10)
 		if hexString.length < totalSize + mp3HeaderLength
-			HexReader.getFileBytes(file, 0, totalSize).then (_hexString) ->
+			HexReader.getFileBytes(file, 0, totalSize + mp3HeaderLength).then (_hexString) ->
 				hexString = _hexString
 				getInfoAndResolve()
 		else
