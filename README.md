@@ -41,7 +41,7 @@ Add the "audiometa" module to your app (or "audiometaWorker" if you want to use 
 
 		module("myapp", ["audiometa"]);
  
-Inject AudioParser into your controller and implement setFile:
+Inject AudioParser (or "AudioParserWorker") into your controller and implement setFile:
 
 		angular.module("myapp").controller "ctrl", ["AudioParser", function (AudioParser) {
 

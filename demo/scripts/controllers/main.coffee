@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "$scope", (AudioParser, $scope) ->
+angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "AudioParserWorker", "$scope", (AudioParser, AudioParserWorker, $scope) ->
 
 	$scope.setFiles = (element) ->
 		files = element.files
@@ -26,12 +26,8 @@ angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "$scope",
 			fileObj = {file: files[i]}
 			$scope.wwfiles.push fileObj
 			do (fileObj) ->
-				worker = new Worker "/scripts/worker.js"
-				worker.addEventListener "message", (e) ->
-					$scope.$apply ->
-						fileObj.info = e.data
-				worker.postMessage
-					file: files[i]			
-					strategies: ["MP3", "WAV", "AIFF"]
+				AudioParserWorker.getInfo(files[i]).then (fileInfo) ->
+					fileObj.info = fileInfo
+					console.log "Metadata Found: ", fileObj
 			i++
 ]

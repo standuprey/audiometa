@@ -1,11 +1,11 @@
 "use strict"
-angular.module("audiometaWorker", []).factory "AudioParser", ["$timeout", ($timeout) ->
+angular.module("audiometaWorker", []).factory "AudioParserWorker", ["$timeout", "$q", ($timeout, $q) ->
 
-	(file, strategies = ["MP3", "WAV", "AIFF"]) ->
+	getInfo: (file, strategies = ["MP3", "WAV", "AIFF"]) ->
 		deferred = $q.defer()
 
 		# it should not take more than 5 second to find the info
-		timer = $timeout.setTimeout ->
+		timer = $timeout ->
 			deferred.reject()
 		, 5000
 
