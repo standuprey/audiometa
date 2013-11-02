@@ -326,7 +326,6 @@
             id3Tag = findTag(firstBytes.substr(12), "ID3 ");
             if (id3Tag) {
               ID3.getAndAddID3v2(id3Tag.content, fileInfo, file, deferred);
-              deferred.resolve(fileInfo);
             } else {
               ssndTag = findTag(firstBytes.substr(12), "SSND");
               if (ssndTag) {

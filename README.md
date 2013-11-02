@@ -13,9 +13,22 @@ Copy the audiometa.js file into your project and add the following line with the
 
 		<script src="/path/to/scripts/audiometa.js"></script>
 
+For the webworker version, you will need to copy audiometaWorker.js and worker.js instead, but only import audiometaWorker.js like so:
+
+		<script src="/path/to/scripts/audiometaWorker.js"></script>
+
+
 Alternatively, if you're using bower, you can add this to your component.json (or bower.json):
 
 		"audiometa": "git://github.com/standup75/audiometa.git"
+
+And add this to your HTML:
+
+    <script src="components/audiometa/audiometa.js"></script>
+
+Or, if you want to use the web worker version:
+
+    <script src="components/audiometa/audiometaWorker.js"></script>
 
 Usage
 -----
@@ -33,6 +46,4 @@ Inject AudioParser into your controller and implement setFile:
 		}
 
 For more details and an example with multiple files, try the (very simple) demo
-
-
 

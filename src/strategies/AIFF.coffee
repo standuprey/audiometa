@@ -25,8 +25,7 @@ angular.module("audiometa").factory "AIFF", ["HexReader", "$q", "ID3", (HexReade
 			id3Tag = findTag firstBytes.substr(12), "ID3 "
 			if id3Tag
 				ID3.getAndAddID3v2(id3Tag.content, fileInfo, file, deferred)
-				deferred.resolve fileInfo
-			else 
+			else
 				ssndTag = findTag firstBytes.substr(12), "SSND"
 				if ssndTag
 					offset = ssndTag.offset + 8 + ssndTag.length

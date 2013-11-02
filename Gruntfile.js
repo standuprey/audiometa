@@ -13,11 +13,12 @@ module.exports = function (grunt) {
     app: 'src',
     demo: 'demo',
     name: 'audiometa',
-    dist: 'dist'
+    dist: 'dist',
+    worker: 'worker'
   };
 
   try {
-    yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
+    yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
   grunt.initConfig({
@@ -34,6 +35,10 @@ module.exports = function (grunt) {
       coffeeTest: {
         files: ['test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
+      },
+      coffeeWorker: {
+        files: ['<%= yeoman.worker %>/*.coffee'],
+        tasks: ['coffee:worker', 'copy:worker']
       },
       livereload: {
         files: [
@@ -58,6 +63,7 @@ module.exports = function (grunt) {
             return [
               lrSnippet,
               mountFolder(connect, '.tmp'),
+              mountFolder(connect, yeomanConfig.worker),
               mountFolder(connect, yeomanConfig.demo),
               mountFolder(connect, yeomanConfig.dist)
             ];
@@ -126,6 +132,15 @@ module.exports = function (grunt) {
           dest: '.tmp/spec',
           ext: '.js'
         }]
+      },
+      worker: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.worker %>',
+          src: '{,*/}*.coffee',
+          dest: '.tmp/scripts',
+          ext: '.js'
+        }]
       }
     },
     concat: {
@@ -143,9 +158,15 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.dist %>',
           dest: '',
-          src: [
-            '<%= yeoman.name %>.js'
-          ]
+          src: [ '*.js' ]
+        }]
+      },
+      worker: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/scripts',
+          dest: '',
+          src: [ 'worker.js', 'audiometaWorker.js' ]
         }]
       }
     }
@@ -165,6 +186,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'coffee:dist',
+    'coffee:test',
     'concat',
     'copy',
     'connect:test',
@@ -173,7 +195,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'coffee:dist',
+    'coffee',
     'concat',
     'copy',
     'test'
