@@ -165,7 +165,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.tmp/scripts',
           dest: '',
-          src: [ 'worker.js', 'audiometaWorker.js' ]
+          src: [ 'audiometaWorker.js' ]
         }]
       }
     }

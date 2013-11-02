@@ -13,7 +13,7 @@ Copy the audiometa.js file into your project and add the following line with the
 
 		<script src="/path/to/scripts/audiometa.js"></script>
 
-For the webworker version, you will need to copy audiometaWorker.js and worker.js instead, but only import audiometaWorker.js like so:
+For the webworker version, you will need to copy audiometaWorker.js instead, but only import audiometaWorker.js like so:
 
 		<script src="/path/to/scripts/audiometaWorker.js"></script>
 
