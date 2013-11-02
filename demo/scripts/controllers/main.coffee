@@ -1,5 +1,5 @@
 "use strict"
-angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "AudioParserWorker", "$scope", (AudioParser, AudioParserWorker, $scope) ->
+angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "AudioParserWorker", "$scope", "$q", (AudioParser, AudioParserWorker, $scope, $q) ->
 
 	$scope.setFiles = (element) ->
 		files = element.files
@@ -22,12 +22,20 @@ angular.module("audiometaDemo").controller "MainCtrl", ["AudioParser", "AudioPar
 		$scope.wwfiles = []
 		i = 0
 		console.log "got #{files.length} files"
-		while i < files.length
+		getfileInfoByBatch(0, files)
+
+	getfileInfoByBatch = (i, files) ->
+		limit = Math.min files.length, i + 10
+		deferred = $q.defer()
+		while i < limit
 			fileObj = {file: files[i]}
-			$scope.wwfiles.push fileObj
-			do (fileObj) ->
+			do (fileObj, i) ->
 				AudioParserWorker.getInfo(files[i]).then (fileInfo) ->
 					fileObj.info = fileInfo
+					$scope.wwfiles.push fileObj
 					console.log "Metadata Found: ", fileObj
+					deferred.resolve() if i + 1 is limit
 			i++
+		deferred.promise.then ->
+			getfileInfoByBatch(limit, files) if limit < files.length
 ]

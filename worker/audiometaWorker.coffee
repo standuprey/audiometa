@@ -386,19 +386,14 @@ angular.module("audiometaWorker", []).factory "AudioParserWorker", ["$timeout", 
 
 	blob = new Blob ["(#{worker.toString()})()"]
 	blobURL = window.URL.createObjectURL blob
+	worker = new Worker blobURL
+	workLoad = 0
 
 	getInfo: (file, strategies = ["MP3", "WAV", "AIFF"]) ->
 		deferred = $q.defer()
 
-		# it should not take more than 5 second to find the info
-		timer = $timeout ->
-			deferred.reject()
-		, 5000
-
-		worker = new Worker blobURL
 		worker.addEventListener "message", (e) ->
 			deferred.resolve e.data
-			$timeout.cancel timer
 
 		worker.postMessage
 			file: file
