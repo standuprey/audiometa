@@ -45,5 +45,11 @@ Inject AudioParser into your controller and implement setFile:
 			});
 		}
 
-For more details and an example with multiple files, try the (very simple) demo
+For more details and an example with multiple files, try the (very simple) demo. How to run the demo? Simple...
 
+		git clone git@github.com:standup75/audiometa.git
+		cd audiometa
+		npm install && bower install
+		grunt server
+
+This should open your browser at http://localhost:9000 where the demo now sits.
