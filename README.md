@@ -64,3 +64,5 @@ For more details and an example with multiple files, try the (very simple) demo.
 		grunt server
 
 This should open your browser at http://localhost:9000 where the demo now sits.
+
+The example's controller includes a function called getfileInfoByBatch. This is important if you plan on selecting a large amount of files. It sends the messages to the webworker by batch of 10, avoiding issues that occur when you overload the web worker with tasks.
