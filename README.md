@@ -36,14 +36,25 @@ Usage
 Register for the change event on the input tag in your html:
 
 		<input type="file" onchange="angular.element(this).scope().setFile(this)"/>
+
+Add the "audiometa" module to your app (or "audiometaWorker" if you want to use the web worker version):
+
+		module("myapp", ["audiometa"]);
  
 Inject AudioParser into your controller and implement setFile:
 
-		$scope.setFile = function(file){
-			AudioParser.getInfo(file).then(function(fileInfo){
-				// do something here
-			});
-		}
+		angular.module("myapp").controller "ctrl", ["AudioParser", function (AudioParser) {
+
+			$scope.setFile = function(file){
+				AudioParser.getInfo(file).then(function(fileInfo){
+					// do something here
+				});
+			}
+
+		}]
+
+Demo
+----
 
 For more details and an example with multiple files, try the (very simple) demo. How to run the demo? Simple...
 
