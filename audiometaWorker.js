@@ -2,7 +2,7 @@
   "use strict";
   angular.module("audiometaWorker", []).factory("AudioParserWorker", [
     "$timeout", "$q", function($timeout, $q) {
-      var blob, blobURL, workLoad, worker;
+      var blob, blobURL, worker;
       worker = function() {
         var HexReader, ID3;
         self.WAV = (function() {
@@ -506,10 +506,11 @@
         });
         return null;
       };
-      blob = new Blob(["(" + (worker.toString()) + ")()"]);
+      blob = new Blob(["(" + (worker.toString()) + ")()"], {
+        type: "text/javascript"
+      });
       blobURL = window.URL.createObjectURL(blob);
       worker = new Worker(blobURL);
-      workLoad = 0;
       return {
         getInfo: function(file, strategies) {
           var deferred;
